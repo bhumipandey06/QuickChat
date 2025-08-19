@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import assets from "../assets/assets";
 
-const LoginPage = () => {
+const LoginPage =()=> {
   const [currState, setCurrState] = useState("Sign Up");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");

@@ -4,7 +4,7 @@ import User from "../model/User.js";
 import bcrypt from "bcryptjs";
 
 // Signup new user
-export const signup = async () => {
+export const signup = async (req,res) => {
   const { fullName, email, password, bio } = req.body;
   try {
     if (!fullName || !email || !password || !bio) {
@@ -43,8 +43,11 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const userData = await User.findOne({ email });
+    if (!userData) {
+      return res.json({ success: false, message: "User not found" });
+    }
 
-    const isPasswordCorrect = await bcrypt.compare(password, hashedPassword);
+    const isPasswordCorrect = await bcrypt.compare(password, userData.password);
     if (!isPasswordCorrect) {
       return res.json({ success: false, message: "Invalid Credentials" });
     }

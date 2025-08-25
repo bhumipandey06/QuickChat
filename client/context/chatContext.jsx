@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export const ChatContext = createContext()
 
 export const ChatProvider = ({children})=>{
-    const [message, setMessage] = useState([])
+    const [messages, setMessages] = useState([])
     const [user, setUser] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
     const [unseenMessages, setUnseenMessages] = useState({})
@@ -24,6 +24,19 @@ export const ChatProvider = ({children})=>{
             toast.error(error.message)
         }
     }
+
+    // function to get messages for selected user
+    const getMessages = async(userId)=>{
+        try {
+            const {data}=await axios.get(`/api/messages/${userId}`)
+            if(data.success){
+                setMessages(data.messages)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const value={
         
     }
